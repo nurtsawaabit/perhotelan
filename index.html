@@ -1,0 +1,919 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotel Guest Service Training</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .quiz-card {
+            transition: all 0.3s ease;
+        }
+        .quiz-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .drag-item {
+            cursor: grab;
+            transition: all 0.2s ease;
+        }
+        .drag-item:active {
+            cursor: grabbing;
+            transform: rotate(5deg);
+        }
+        .drop-zone {
+            min-height: 60px;
+            transition: all 0.2s ease;
+        }
+        .drop-zone.drag-over {
+            background-color: #e0f2fe;
+            border-color: #0284c7;
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="h-full bg-gradient-to-br from-blue-50 to-indigo-100 font-sans">
+  <div class="min-h-full"><!-- Header -->
+   <header class="bg-white shadow-lg border-b-4 border-blue-600">
+    <div class="max-w-6xl mx-auto px-6 py-6">
+     <div class="flex items-center justify-between">
+      <div>
+       <h1 id="main-title" class="text-3xl font-bold text-gray-800 mb-2">Pelatihan Pelayanan Tamu Hotel</h1>
+       <p class="text-gray-600">Basic Guest Handling Procedures untuk Siswa Perhotelan</p>
+      </div>
+      <div class="text-right">
+       <p id="instructor-info" class="text-sm text-gray-600">Instruktur: Bapak/Ibu Guru</p>
+       <p id="school-info" class="text-sm text-gray-600">SMK Perhotelan</p>
+      </div>
+     </div>
+    </div>
+   </header><!-- Navigation -->
+   <nav class="bg-blue-600 text-white">
+    <div class="max-w-6xl mx-auto px-6">
+     <div class="flex space-x-8"><button onclick="showSection('home')" class="nav-btn py-4 px-4 hover:bg-blue-700 transition-colors border-b-2 border-transparent hover:border-white"> 🏠 Beranda </button> <button onclick="showSection('learning')" class="nav-btn py-4 px-4 hover:bg-blue-700 transition-colors border-b-2 border-transparent hover:border-white"> 📚 Materi </button> <button onclick="showSection('assessment')" class="nav-btn py-4 px-4 hover:bg-blue-700 transition-colors border-b-2 border-transparent hover:border-white"> 📝 Asesmen </button> <button onclick="showSection('results')" class="nav-btn py-4 px-4 hover:bg-blue-700 transition-colors border-b-2 border-transparent hover:border-white"> 📊 Hasil </button>
+     </div>
+    </div>
+   </nav><!-- Main Content -->
+   <main class="max-w-6xl mx-auto px-6 py-8"><!-- Home Section -->
+    <section id="home-section" class="section-content">
+     <div class="bg-white rounded-xl shadow-lg p-8 mb-8 fade-in">
+      <div class="text-center mb-8">
+       <div class="text-6xl mb-4">
+        🏨
+       </div>
+       <h2 class="text-2xl font-bold text-gray-800 mb-4">Selamat Datang di Pelatihan Pelayanan Tamu Hotel</h2>
+       <p class="text-gray-600 max-w-2xl mx-auto">Media pembelajaran interaktif untuk memahami prosedur dasar penanganan tamu di industri perhotelan. Pelajari cara memberikan pelayanan terbaik dengan standar profesional.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8">
+       <div class="bg-blue-50 rounded-lg p-6">
+        <h3 class="text-xl font-semibold text-blue-800 mb-4">🎯 Tujuan Pembelajaran</h3>
+        <ul class="space-y-2 text-gray-700">
+         <li class="flex items-start"><span class="text-blue-600 mr-2">✓</span> Memahami cara menyapa tamu dengan sopan dan profesional</li>
+         <li class="flex items-start"><span class="text-blue-600 mr-2">✓</span> Mampu memberikan informasi hotel dengan jelas</li>
+         <li class="flex items-start"><span class="text-blue-600 mr-2">✓</span> Menangani keluhan sederhana dengan tepat</li>
+         <li class="flex items-start"><span class="text-blue-600 mr-2">✓</span> Menjaga etika komunikasi dalam pelayanan</li>
+        </ul>
+       </div>
+       <div class="bg-green-50 rounded-lg p-6">
+        <h3 class="text-xl font-semibold text-green-800 mb-4">📋 Fitur Pembelajaran</h3>
+        <ul class="space-y-2 text-gray-700">
+         <li class="flex items-start"><span class="text-green-600 mr-2">📖</span> Materi lengkap dengan contoh dialog</li>
+         <li class="flex items-start"><span class="text-green-600 mr-2">🎮</span> 3 jenis asesmen interaktif</li>
+         <li class="flex items-start"><span class="text-green-600 mr-2">📊</span> Tracking hasil pembelajaran</li>
+         <li class="flex items-start"><span class="text-green-600 mr-2">💾</span> Penyimpanan progress otomatis</li>
+        </ul>
+       </div>
+      </div>
+      <div class="text-center mt-8"><button onclick="showSection('learning')" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors"> Mulai Belajar 🚀 </button>
+      </div>
+     </div>
+    </section><!-- Learning Section -->
+    <section id="learning-section" class="section-content hidden">
+     <div class="bg-white rounded-xl shadow-lg p-8 mb-8 fade-in">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">📚 Materi Pembelajaran: Basic Guest Handling Procedures</h2><!-- Materi 1: Cara Menyapa Tamu -->
+      <div class="mb-8 border-l-4 border-blue-500 pl-6">
+       <h3 class="text-xl font-semibold text-blue-800 mb-4">1. Cara Menyapa Tamu</h3>
+       <div class="bg-blue-50 rounded-lg p-6 mb-4">
+        <h4 class="font-semibold mb-3">Prinsip Dasar Menyapa:</h4>
+        <ul class="space-y-2 text-gray-700">
+         <li>• <strong>Senyum tulus</strong> - Berikan senyum hangat dan tulus</li>
+         <li>• <strong>Kontak mata</strong> - Tatap mata tamu dengan sopan</li>
+         <li>• <strong>Postur tubuh</strong> - Berdiri tegak dan profesional</li>
+         <li>• <strong>Intonasi suara</strong> - Gunakan nada yang ramah dan jelas</li>
+        </ul>
+       </div>
+       <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+        <p class="text-sm"><strong>Tips:</strong> Sapaan pertama menentukan kesan tamu terhadap hotel. Pastikan selalu memberikan sapaan terbaik!</p>
+       </div>
+      </div><!-- Materi 2: Memberikan Informasi -->
+      <div class="mb-8 border-l-4 border-green-500 pl-6">
+       <h3 class="text-xl font-semibold text-green-800 mb-4">2. Memberikan Informasi Hotel</h3>
+       <div class="bg-green-50 rounded-lg p-6 mb-4">
+        <h4 class="font-semibold mb-3">Informasi yang Harus Dikuasai:</h4>
+        <div class="grid md:grid-cols-2 gap-4">
+         <ul class="space-y-2 text-gray-700">
+          <li>• Fasilitas hotel (kolam renang, gym, spa)</li>
+          <li>• Jam operasional restaurant</li>
+          <li>• Layanan room service</li>
+          <li>• Prosedur check-in/check-out</li>
+         </ul>
+         <ul class="space-y-2 text-gray-700">
+          <li>• Lokasi tempat wisata terdekat</li>
+          <li>• Transportasi umum</li>
+          <li>• Emergency contact</li>
+          <li>• Kebijakan hotel</li>
+         </ul>
+        </div>
+       </div>
+      </div><!-- Materi 3: Menangani Keluhan -->
+      <div class="mb-8 border-l-4 border-orange-500 pl-6">
+       <h3 class="text-xl font-semibold text-orange-800 mb-4">3. Menangani Keluhan Sederhana</h3>
+       <div class="bg-orange-50 rounded-lg p-6 mb-4">
+        <h4 class="font-semibold mb-3">Langkah LISTEN:</h4>
+        <ul class="space-y-2 text-gray-700">
+         <li><strong>L</strong> - <em>Listen</em> (Dengarkan dengan seksama)</li>
+         <li><strong>I</strong> - <em>Inquire</em> (Tanyakan detail masalah)</li>
+         <li><strong>S</strong> - <em>Sympathize</em> (Tunjukkan empati)</li>
+         <li><strong>T</strong> - <em>Take action</em> (Ambil tindakan)</li>
+         <li><strong>E</strong> - <em>Explain</em> (Jelaskan solusi)</li>
+         <li><strong>N</strong> - <em>Note</em> (Catat untuk follow-up)</li>
+        </ul>
+       </div>
+      </div><!-- Materi 4: Etika Komunikasi -->
+      <div class="mb-8 border-l-4 border-purple-500 pl-6">
+       <h3 class="text-xl font-semibold text-purple-800 mb-4">4. Etika Komunikasi</h3>
+       <div class="bg-purple-50 rounded-lg p-6">
+        <div class="grid md:grid-cols-2 gap-6">
+         <div>
+          <h4 class="font-semibold mb-3 text-green-700">✅ Yang Harus Dilakukan:</h4>
+          <ul class="space-y-1 text-sm text-gray-700">
+           <li>• Gunakan bahasa yang sopan</li>
+           <li>• Panggil tamu dengan sebutan yang tepat</li>
+           <li>• Berikan perhatian penuh</li>
+           <li>• Jaga privasi tamu</li>
+           <li>• Berpakaian rapi dan profesional</li>
+          </ul>
+         </div>
+         <div>
+          <h4 class="font-semibold mb-3 text-red-700">❌ Yang Harus Dihindari:</h4>
+          <ul class="space-y-1 text-sm text-gray-700">
+           <li>• Memotong pembicaraan tamu</li>
+           <li>• Menggunakan bahasa informal</li>
+           <li>• Menunjukkan ekspresi bosan</li>
+           <li>• Membicarakan tamu lain</li>
+           <li>• Menggunakan ponsel saat melayani</li>
+          </ul>
+         </div>
+        </div>
+       </div>
+      </div><!-- Contoh Dialog -->
+      <div class="bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl p-8">
+       <h3 class="text-xl font-bold text-gray-800 mb-6 text-center">🎭 Contoh Dialog Check-in</h3>
+       <div class="bg-white rounded-lg p-6 shadow-md">
+        <div class="space-y-4">
+         <div class="flex items-start space-x-4">
+          <div class="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+           FO
+          </div>
+          <div class="flex-1">
+           <p class="bg-blue-50 rounded-lg p-3 text-gray-800">"Selamat pagi, Bapak/Ibu. Selamat datang di Hotel Nusantara. Saya Sari, siap membantu Anda hari ini. Apakah Bapak/Ibu sudah memiliki reservasi?"</p>
+          </div>
+         </div>
+         <div class="flex items-start space-x-4">
+          <div class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+           T
+          </div>
+          <div class="flex-1">
+           <p class="bg-green-50 rounded-lg p-3 text-gray-800">"Pagi. Ya, saya sudah booking atas nama Budi Santoso untuk 2 malam."</p>
+          </div>
+         </div>
+         <div class="flex items-start space-x-4">
+          <div class="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+           FO
+          </div>
+          <div class="flex-1">
+           <p class="bg-blue-50 rounded-lg p-3 text-gray-800">"Baik Pak Budi, terima kasih sudah memilih hotel kami. Saya cek dulu reservasinya... Ya, benar. Superior room untuk 2 malam, check-out tanggal 15. Boleh saya minta KTP untuk proses registrasi?"</p>
+          </div>
+         </div>
+         <div class="flex items-start space-x-4">
+          <div class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+           T
+          </div>
+          <div class="flex-1">
+           <p class="bg-green-50 rounded-lg p-3 text-gray-800">"Ini KTP-nya. Oh ya, apakah ada fasilitas WiFi gratis?"</p>
+          </div>
+         </div>
+         <div class="flex items-start space-x-4">
+          <div class="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+           FO
+          </div>
+          <div class="flex-1">
+           <p class="bg-blue-50 rounded-lg p-3 text-gray-800">"Tentu saja Pak Budi. WiFi gratis tersedia di seluruh area hotel. Password-nya akan saya berikan bersama key card. Ini key card kamar 205 di lantai 2. Breakfast tersedia jam 6-10 pagi di restaurant lantai 1. Ada yang ingin ditanyakan lagi?"</p>
+          </div>
+         </div>
+         <div class="flex items-start space-x-4">
+          <div class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+           T
+          </div>
+          <div class="flex-1">
+           <p class="bg-green-50 rounded-lg p-3 text-gray-800">"Sudah cukup, terima kasih."</p>
+          </div>
+         </div>
+         <div class="flex items-start space-x-4">
+          <div class="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+           FO
+          </div>
+          <div class="flex-1">
+           <p class="bg-blue-50 rounded-lg p-3 text-gray-800">"Sama-sama Pak Budi. Selamat beristirahat dan jika ada yang dibutuhkan, jangan ragu untuk menghubungi front desk. Semoga menginap yang menyenangkan!"</p>
+          </div>
+         </div>
+        </div>
+        <div class="mt-6 p-4 bg-yellow-50 border-l-4 border-yellow-400">
+         <p class="text-sm text-gray-700"><strong>Catatan:</strong> Perhatikan penggunaan nama tamu, informasi yang jelas, dan penutupan yang ramah dalam dialog di atas.</p>
+        </div>
+       </div>
+      </div>
+      <div class="text-center mt-8"><button onclick="showSection('assessment')" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors"> Lanjut ke Asesmen 📝 </button>
+      </div>
+     </div>
+    </section><!-- Assessment Section -->
+    <section id="assessment-section" class="section-content hidden">
+     <div class="bg-white rounded-xl shadow-lg p-8 mb-8 fade-in">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">📝 Asesmen Pembelajaran</h2>
+      <div class="grid md:grid-cols-3 gap-6 mb-8">
+       <div class="quiz-card bg-blue-50 rounded-lg p-6 cursor-pointer border-2 border-transparent hover:border-blue-500" onclick="startQuiz('multiple-choice')">
+        <div class="text-center">
+         <div class="text-4xl mb-4">
+          🔤
+         </div>
+         <h3 class="text-lg font-semibold text-blue-800 mb-2">Pilihan Ganda</h3>
+         <p class="text-gray-600 text-sm">5 soal pilihan ganda tentang prosedur pelayanan tamu</p>
+        </div>
+       </div>
+       <div class="quiz-card bg-green-50 rounded-lg p-6 cursor-pointer border-2 border-transparent hover:border-green-500" onclick="startQuiz('drag-drop')">
+        <div class="text-center">
+         <div class="text-4xl mb-4">
+          🎯
+         </div>
+         <h3 class="text-lg font-semibold text-green-800 mb-2">Drag &amp; Drop</h3>
+         <p class="text-gray-600 text-sm">Susun langkah-langkah pelayanan dengan benar</p>
+        </div>
+       </div>
+       <div class="quiz-card bg-purple-50 rounded-lg p-6 cursor-pointer border-2 border-transparent hover:border-purple-500" onclick="startQuiz('fill-blank')">
+        <div class="text-center">
+         <div class="text-4xl mb-4">
+          ✏️
+         </div>
+         <h3 class="text-lg font-semibold text-purple-800 mb-2">Isian Singkat</h3>
+         <p class="text-gray-600 text-sm">Lengkapi dialog pelayanan tamu</p>
+        </div>
+       </div>
+      </div><!-- Quiz Container -->
+      <div id="quiz-container" class="hidden"><!-- Student Name Input -->
+       <div id="student-input" class="mb-6"><label for="student-name" class="block text-sm font-medium text-gray-700 mb-2">Nama Siswa:</label> <input type="text" id="student-name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Masukkan nama Anda">
+       </div><!-- Quiz Content -->
+       <div id="quiz-content"></div><!-- Quiz Navigation -->
+       <div id="quiz-navigation" class="flex justify-between items-center mt-6"><button id="prev-btn" onclick="previousQuestion()" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors" disabled> ← Sebelumnya </button> <span id="question-counter" class="text-gray-600 font-medium"></span> <button id="next-btn" onclick="nextQuestion()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-colors"> Selanjutnya → </button>
+       </div>
+      </div>
+     </div>
+    </section><!-- Results Section -->
+    <section id="results-section" class="section-content hidden">
+     <div class="bg-white rounded-xl shadow-lg p-8 mb-8 fade-in">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">📊 Hasil Pembelajaran</h2>
+      <div id="results-content">
+       <div class="text-center py-12">
+        <div class="text-6xl mb-4">
+         📈
+        </div>
+        <p class="text-gray-600">Belum ada hasil asesmen. Silakan kerjakan asesmen terlebih dahulu.</p><button onclick="showSection('assessment')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-colors"> Mulai Asesmen </button>
+       </div>
+      </div>
+     </div>
+    </section>
+   </main><!-- Footer -->
+   <footer class="bg-gray-800 text-white py-8 mt-12">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+     <p>© 2024 Media Pembelajaran Perhotelan. Dibuat untuk mendukung pembelajaran siswa SMK Perhotelan.</p>
+    </div>
+   </footer>
+  </div>
+  <script>
+        // Configuration
+        const defaultConfig = {
+            website_title: "Pelatihan Pelayanan Tamu Hotel",
+            instructor_name: "Bapak/Ibu Guru",
+            school_name: "SMK Perhotelan"
+        };
+
+        // Global variables
+        let currentQuizType = '';
+        let currentQuestionIndex = 0;
+        let quizAnswers = [];
+        let quizData = [];
+        let studentResults = [];
+
+        // Quiz data
+        const quizzes = {
+            'multiple-choice': [
+                {
+                    question: "Apa yang harus dilakukan pertama kali saat menyapa tamu?",
+                    options: ["Menanyakan nama", "Memberikan senyum tulus", "Meminta dokumen", "Menjelaskan fasilitas"],
+                    correct: 1
+                },
+                {
+                    question: "Dalam metode LISTEN, apa yang dimaksud dengan huruf 'S'?",
+                    options: ["Solve (Selesaikan)", "Sympathize (Tunjukkan empati)", "Speak (Berbicara)", "Service (Layanan)"],
+                    correct: 1
+                },
+                {
+                    question: "Informasi apa yang TIDAK perlu dikuasai oleh front desk staff?",
+                    options: ["Jam operasional restaurant", "Data pribadi tamu lain", "Fasilitas hotel", "Prosedur check-in"],
+                    correct: 1
+                },
+                {
+                    question: "Bagaimana cara yang tepat memanggil tamu?",
+                    options: ["Dengan nama panggilan", "Bapak/Ibu + nama keluarga", "Hanya dengan nama depan", "Dengan nomor kamar"],
+                    correct: 1
+                },
+                {
+                    question: "Apa yang harus dihindari saat melayani tamu?",
+                    options: ["Memberikan informasi lengkap", "Memotong pembicaraan tamu", "Menunjukkan empati", "Mencatat keluhan"],
+                    correct: 1
+                }
+            ],
+            'drag-drop': [
+                {
+                    question: "Susun langkah-langkah menyapa tamu yang benar:",
+                    items: ["Berikan senyum tulus", "Buat kontak mata", "Ucapkan salam", "Perkenalkan diri", "Tanyakan kebutuhan"],
+                    correct: [0, 1, 2, 3, 4]
+                },
+                {
+                    question: "Urutkan proses check-in yang benar:",
+                    items: ["Verifikasi reservasi", "Minta dokumen identitas", "Berikan key card", "Jelaskan fasilitas", "Ucapkan selamat datang"],
+                    correct: [4, 0, 1, 2, 3]
+                },
+                {
+                    question: "Susun langkah LISTEN dalam menangani keluhan:",
+                    items: ["Take action", "Listen", "Note", "Explain", "Sympathize", "Inquire"],
+                    correct: [1, 5, 4, 0, 3, 2]
+                },
+                {
+                    question: "Urutkan prioritas informasi yang harus diberikan saat check-in:",
+                    items: ["Lokasi kamar", "WiFi password", "Jam breakfast", "Emergency contact", "Fasilitas hotel"],
+                    correct: [0, 1, 2, 4, 3]
+                },
+                {
+                    question: "Susun tahapan komunikasi yang efektif:",
+                    items: ["Evaluasi hasil", "Dengarkan aktif", "Berikan respon", "Pahami kebutuhan", "Buka komunikasi"],
+                    correct: [4, 1, 3, 2, 0]
+                }
+            ],
+            'fill-blank': [
+                {
+                    question: "Lengkapi dialog berikut:\n'Selamat pagi, Bapak/Ibu. _______ di Hotel Nusantara.'",
+                    answer: "selamat datang",
+                    hint: "Kata sambutan untuk tamu yang baru datang"
+                },
+                {
+                    question: "Lengkapi kalimat:\n'Boleh saya minta _______ untuk proses registrasi?'",
+                    answer: "ktp",
+                    hint: "Dokumen identitas yang diperlukan"
+                },
+                {
+                    question: "Lengkapi dialog:\n'WiFi gratis tersedia di seluruh area hotel. _______ akan saya berikan bersama key card.'",
+                    answer: "password",
+                    hint: "Kode akses untuk internet"
+                },
+                {
+                    question: "Lengkapi kalimat pelayanan:\n'Jika ada yang dibutuhkan, jangan ragu untuk menghubungi _______.'",
+                    answer: "front desk",
+                    hint: "Bagian hotel yang melayani tamu 24 jam"
+                },
+                {
+                    question: "Lengkapi ucapan penutup:\n'_______ yang menyenangkan!'",
+                    answer: "selamat beristirahat",
+                    hint: "Ucapan untuk tamu yang akan ke kamar"
+                }
+            ]
+        };
+
+        // Data SDK handler
+        const dataHandler = {
+            onDataChanged(data) {
+                studentResults = data;
+                updateResultsDisplay();
+            }
+        };
+
+        // Initialize SDKs
+        async function initializeApp() {
+            // Initialize Data SDK
+            const initResult = await window.dataSdk.init(dataHandler);
+            if (!initResult.isOk) {
+                console.error("Failed to initialize data SDK");
+            }
+
+            // Initialize Element SDK
+            if (window.elementSdk) {
+                await window.elementSdk.init({
+                    defaultConfig,
+                    onConfigChange: async (config) => {
+                        document.getElementById('main-title').textContent = config.website_title || defaultConfig.website_title;
+                        document.getElementById('instructor-info').textContent = `Instruktur: ${config.instructor_name || defaultConfig.instructor_name}`;
+                        document.getElementById('school-info').textContent = config.school_name || defaultConfig.school_name;
+                    },
+                    mapToCapabilities: (config) => ({
+                        recolorables: [
+                            {
+                                get: () => config.primary_color || "#2563eb",
+                                set: (value) => {
+                                    if (window.elementSdk) {
+                                        window.elementSdk.setConfig({ primary_color: value });
+                                    }
+                                }
+                            }
+                        ],
+                        borderables: [],
+                        fontEditable: {
+                            get: () => config.font_family || "Inter, sans-serif",
+                            set: (value) => {
+                                if (window.elementSdk) {
+                                    window.elementSdk.setConfig({ font_family: value });
+                                }
+                            }
+                        },
+                        fontSizeable: {
+                            get: () => config.font_size || 16,
+                            set: (value) => {
+                                if (window.elementSdk) {
+                                    window.elementSdk.setConfig({ font_size: value });
+                                }
+                            }
+                        }
+                    }),
+                    mapToEditPanelValues: (config) => new Map([
+                        ["website_title", config.website_title || defaultConfig.website_title],
+                        ["instructor_name", config.instructor_name || defaultConfig.instructor_name],
+                        ["school_name", config.school_name || defaultConfig.school_name]
+                    ])
+                });
+            }
+        }
+
+        // Navigation functions
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.section-content').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName + '-section').classList.remove('hidden');
+            
+            // Update navigation
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('border-white', 'bg-blue-700');
+            });
+            event.target.classList.add('border-white', 'bg-blue-700');
+        }
+
+        // Quiz functions
+        function startQuiz(quizType) {
+            currentQuizType = quizType;
+            currentQuestionIndex = 0;
+            quizAnswers = [];
+            quizData = quizzes[quizType];
+            
+            document.getElementById('quiz-container').classList.remove('hidden');
+            document.querySelector('.grid').style.display = 'none';
+            
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const question = quizData[currentQuestionIndex];
+            const container = document.getElementById('quiz-content');
+            
+            // Update counter
+            document.getElementById('question-counter').textContent = 
+                `Soal ${currentQuestionIndex + 1} dari ${quizData.length}`;
+            
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            document.getElementById('next-btn').textContent = 
+                currentQuestionIndex === quizData.length - 1 ? 'Selesai' : 'Selanjutnya →';
+            
+            let html = `<div class="mb-6">
+                <h3 class="text-lg font-semibold mb-4">Soal ${currentQuestionIndex + 1}:</h3>
+                <p class="text-gray-700 mb-6">${question.question.replace(/\n/g, '<br>')}</p>`;
+            
+            if (currentQuizType === 'multiple-choice') {
+                html += '<div class="space-y-3">';
+                question.options.forEach((option, index) => {
+                    const isSelected = quizAnswers[currentQuestionIndex] === index;
+                    html += `
+                        <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50 ${isSelected ? 'bg-blue-50 border-blue-500' : 'border-gray-300'}">
+                            <input type="radio" name="answer" value="${index}" ${isSelected ? 'checked' : ''} 
+                                   onchange="saveAnswer(${index})" class="mr-3">
+                            <span>${option}</span>
+                        </label>`;
+                });
+                html += '</div>';
+            } else if (currentQuizType === 'drag-drop') {
+                html += `
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold mb-3">Item yang tersedia:</h4>
+                            <div id="drag-items" class="space-y-2">`;
+                
+                const availableItems = question.items.filter((_, index) => 
+                    !quizAnswers[currentQuestionIndex] || !quizAnswers[currentQuestionIndex].includes(index)
+                );
+                
+                availableItems.forEach((item, index) => {
+                    const originalIndex = question.items.indexOf(item);
+                    html += `
+                        <div class="drag-item bg-blue-100 p-3 rounded-lg border cursor-grab" 
+                             draggable="true" data-index="${originalIndex}">
+                            ${item}
+                        </div>`;
+                });
+                
+                html += `</div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-3">Urutan yang benar:</h4>
+                            <div id="drop-zones" class="space-y-2">`;
+                
+                for (let i = 0; i < question.items.length; i++) {
+                    const droppedItem = quizAnswers[currentQuestionIndex] && quizAnswers[currentQuestionIndex][i] !== undefined
+                        ? question.items[quizAnswers[currentQuestionIndex][i]]
+                        : '';
+                    
+                    html += `
+                        <div class="drop-zone border-2 border-dashed border-gray-300 p-3 rounded-lg min-h-12 flex items-center ${droppedItem ? 'bg-green-50 border-green-300' : ''}" 
+                             data-position="${i}">
+                            ${droppedItem ? `<span class="text-green-800">${i + 1}. ${droppedItem}</span>` : `<span class="text-gray-400">${i + 1}. Letakkan item di sini</span>`}
+                        </div>`;
+                }
+                
+                html += '</div></div></div>';
+            } else if (currentQuizType === 'fill-blank') {
+                html += `
+                    <div class="mb-4">
+                        <input type="text" id="fill-answer" 
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                               placeholder="Masukkan jawaban Anda..."
+                               value="${quizAnswers[currentQuestionIndex] || ''}"
+                               onchange="saveAnswer(this.value)">
+                    </div>
+                    <div class="text-sm text-gray-600">
+                        <strong>Petunjuk:</strong> ${question.hint}
+                    </div>`;
+            }
+            
+            html += '</div>';
+            container.innerHTML = html;
+            
+            // Add drag and drop event listeners
+            if (currentQuizType === 'drag-drop') {
+                setupDragAndDrop();
+            }
+        }
+
+        function setupDragAndDrop() {
+            const dragItems = document.querySelectorAll('.drag-item');
+            const dropZones = document.querySelectorAll('.drop-zone');
+            
+            dragItems.forEach(item => {
+                item.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', e.target.dataset.index);
+                });
+            });
+            
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    zone.classList.add('drag-over');
+                });
+                
+                zone.addEventListener('dragleave', () => {
+                    zone.classList.remove('drag-over');
+                });
+                
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    zone.classList.remove('drag-over');
+                    
+                    const itemIndex = parseInt(e.dataTransfer.getData('text/plain'));
+                    const position = parseInt(zone.dataset.position);
+                    
+                    if (!quizAnswers[currentQuestionIndex]) {
+                        quizAnswers[currentQuestionIndex] = new Array(quizData[currentQuestionIndex].items.length);
+                    }
+                    
+                    quizAnswers[currentQuestionIndex][position] = itemIndex;
+                    renderQuestion();
+                });
+            });
+        }
+
+        function saveAnswer(answer) {
+            quizAnswers[currentQuestionIndex] = answer;
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+            }
+        }
+
+        async function finishQuiz() {
+            const studentName = document.getElementById('student-name').value.trim();
+            if (!studentName) {
+                alert('Silakan masukkan nama Anda terlebih dahulu.');
+                return;
+            }
+            
+            // Calculate score and detailed results
+            let score = 0;
+            const detailedResults = [];
+            
+            quizAnswers.forEach((answer, index) => {
+                const question = quizData[index];
+                let isCorrect = false;
+                let userAnswerText = '';
+                let correctAnswerText = '';
+                
+                if (currentQuizType === 'multiple-choice') {
+                    isCorrect = answer === question.correct;
+                    userAnswerText = answer !== undefined ? question.options[answer] : 'Tidak dijawab';
+                    correctAnswerText = question.options[question.correct];
+                } else if (currentQuizType === 'drag-drop') {
+                    isCorrect = answer && JSON.stringify(answer) === JSON.stringify(question.correct);
+                    userAnswerText = answer ? answer.map(i => question.items[i]).join(' → ') : 'Tidak dijawab';
+                    correctAnswerText = question.correct.map(i => question.items[i]).join(' → ');
+                } else if (currentQuizType === 'fill-blank') {
+                    isCorrect = answer && answer.toLowerCase().trim() === question.answer.toLowerCase();
+                    userAnswerText = answer || 'Tidak dijawab';
+                    correctAnswerText = question.answer;
+                }
+                
+                if (isCorrect) score++;
+                
+                detailedResults.push({
+                    question: question.question,
+                    userAnswer: userAnswerText,
+                    correctAnswer: correctAnswerText,
+                    isCorrect: isCorrect
+                });
+            });
+            
+            const percentage = Math.round((score / quizData.length) * 100);
+            
+            // Save result
+            const result = {
+                student_name: studentName,
+                quiz_type: currentQuizType,
+                score: percentage,
+                answers: JSON.stringify(quizAnswers),
+                completed_at: new Date().toISOString()
+            };
+            
+            const saveResult = await window.dataSdk.create(result);
+            if (saveResult.isOk) {
+                showQuizResults(percentage, score, detailedResults);
+            } else {
+                alert('Gagal menyimpan hasil. Silakan coba lagi.');
+            }
+        }
+
+        function showQuizResults(percentage, score, detailedResults) {
+            const quizTypeNames = {
+                'multiple-choice': 'Pilihan Ganda',
+                'drag-drop': 'Drag & Drop',
+                'fill-blank': 'Isian Singkat'
+            };
+
+            let html = `
+                <div class="space-y-6">
+                    <!-- Score Summary -->
+                    <div class="text-center py-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
+                        <div class="text-6xl mb-4">${percentage >= 80 ? '🎉' : percentage >= 60 ? '👍' : '💪'}</div>
+                        <h3 class="text-2xl font-bold mb-4">Quiz ${quizTypeNames[currentQuizType]} Selesai!</h3>
+                        <p class="text-lg mb-2">Skor Anda: <span class="font-bold text-blue-600">${percentage}%</span></p>
+                        <p class="text-gray-600 mb-4">${score} dari ${quizData.length} jawaban benar</p>
+                        
+                        <div class="flex justify-center space-x-4 mb-6">
+                            <button onclick="toggleAnswerReview()" id="review-btn" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-semibold transition-colors">
+                                📋 Lihat Pembahasan
+                            </button>
+                            <button onclick="resetQuiz()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-colors">
+                                🔄 Quiz Lain
+                            </button>
+                            <button onclick="showSection('results')" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-semibold transition-colors">
+                                📊 Lihat Hasil
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Answer Review Section -->
+                    <div id="answer-review" class="hidden">
+                        <h4 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                            📝 Pembahasan Jawaban
+                        </h4>
+                        <div class="space-y-4">`;
+
+            detailedResults.forEach((result, index) => {
+                const statusIcon = result.isCorrect ? '✅' : '❌';
+                const statusColor = result.isCorrect ? 'border-green-200 bg-green-50' : 'border-red-200 bg-red-50';
+                
+                html += `
+                    <div class="border-2 ${statusColor} rounded-lg p-4">
+                        <div class="flex items-start space-x-3">
+                            <span class="text-2xl">${statusIcon}</span>
+                            <div class="flex-1">
+                                <h5 class="font-semibold text-gray-800 mb-2">
+                                    Soal ${index + 1}: ${result.question.replace(/\n/g, '<br>')}
+                                </h5>
+                                
+                                <div class="grid md:grid-cols-2 gap-4 text-sm">
+                                    <div class="bg-white rounded-lg p-3 border">
+                                        <p class="font-medium text-gray-600 mb-1">Jawaban Anda:</p>
+                                        <p class="${result.isCorrect ? 'text-green-700' : 'text-red-700'} font-medium">
+                                            ${result.userAnswer}
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="bg-white rounded-lg p-3 border">
+                                        <p class="font-medium text-gray-600 mb-1">Jawaban Benar:</p>
+                                        <p class="text-green-700 font-medium">
+                                            ${result.correctAnswer}
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                ${!result.isCorrect ? `
+                                    <div class="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                                        <p class="text-sm text-yellow-800">
+                                            <strong>💡 Penjelasan:</strong> ${getExplanation(index, currentQuizType)}
+                                        </p>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>`;
+            });
+
+            html += `
+                        </div>
+                    </div>
+                </div>`;
+
+            document.getElementById('quiz-content').innerHTML = html;
+            document.getElementById('quiz-navigation').style.display = 'none';
+        }
+
+        function toggleAnswerReview() {
+            const reviewSection = document.getElementById('answer-review');
+            const reviewBtn = document.getElementById('review-btn');
+            
+            if (reviewSection.classList.contains('hidden')) {
+                reviewSection.classList.remove('hidden');
+                reviewBtn.textContent = '🔼 Sembunyikan Pembahasan';
+                reviewBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                reviewSection.classList.add('hidden');
+                reviewBtn.textContent = '📋 Lihat Pembahasan';
+            }
+        }
+
+        function getExplanation(questionIndex, quizType) {
+            const explanations = {
+                'multiple-choice': [
+                    'Senyum tulus adalah hal pertama yang harus dilakukan saat menyapa tamu karena menciptakan kesan positif.',
+                    'Dalam metode LISTEN, huruf S berarti Sympathize (menunjukkan empati) kepada tamu yang mengalami masalah.',
+                    'Data pribadi tamu lain tidak boleh dibagikan karena melanggar privasi dan etika perhotelan.',
+                    'Memanggil tamu dengan Bapak/Ibu + nama keluarga menunjukkan rasa hormat dan profesionalisme.',
+                    'Memotong pembicaraan tamu adalah tindakan tidak sopan yang harus dihindari dalam pelayanan.'
+                ],
+                'drag-drop': [
+                    'Urutan menyapa yang benar: senyum → kontak mata → salam → perkenalan → tanya kebutuhan.',
+                    'Proses check-in dimulai dengan sambutan, lalu verifikasi, dokumen, key card, dan penjelasan fasilitas.',
+                    'Metode LISTEN: Listen → Inquire → Sympathize → Take action → Explain → Note.',
+                    'Prioritas informasi check-in: lokasi kamar (penting), WiFi (kebutuhan), breakfast (layanan), fasilitas, emergency.',
+                    'Komunikasi efektif: buka komunikasi → dengar aktif → pahami → respon → evaluasi hasil.'
+                ],
+                'fill-blank': [
+                    '"Selamat datang" adalah ucapan standar untuk menyambut tamu yang baru tiba di hotel.',
+                    'KTP (Kartu Tanda Penduduk) adalah dokumen identitas yang diperlukan untuk registrasi hotel.',
+                    'Password WiFi diberikan bersama key card sebagai bagian dari layanan hotel.',
+                    'Front desk adalah bagian hotel yang melayani tamu 24 jam dan siap membantu kapan saja.',
+                    '"Selamat beristirahat" adalah ucapan penutup yang tepat untuk tamu yang akan ke kamar.'
+                ]
+            };
+            
+            return explanations[quizType][questionIndex] || 'Pelajari kembali materi untuk memahami konsep ini dengan lebih baik.';
+        }
+
+        function resetQuiz() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.querySelector('.grid').style.display = 'grid';
+            document.getElementById('quiz-navigation').style.display = 'flex';
+            document.getElementById('student-name').value = '';
+        }
+
+        function updateResultsDisplay() {
+            const container = document.getElementById('results-content');
+            
+            if (studentResults.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12">
+                        <div class="text-6xl mb-4">📈</div>
+                        <p class="text-gray-600">Belum ada hasil asesmen. Silakan kerjakan asesmen terlebih dahulu.</p>
+                        <button onclick="showSection('assessment')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-colors">
+                            Mulai Asesmen
+                        </button>
+                    </div>`;
+                return;
+            }
+            
+            // Group results by student
+            const groupedResults = {};
+            studentResults.forEach(result => {
+                if (!groupedResults[result.student_name]) {
+                    groupedResults[result.student_name] = [];
+                }
+                groupedResults[result.student_name].push(result);
+            });
+            
+            let html = '<div class="space-y-6">';
+            
+            Object.keys(groupedResults).forEach(studentName => {
+                const results = groupedResults[studentName];
+                const avgScore = Math.round(results.reduce((sum, r) => sum + r.score, 0) / results.length);
+                
+                html += `
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-semibold text-gray-800">${studentName}</h3>
+                            <span class="text-lg font-bold ${avgScore >= 80 ? 'text-green-600' : avgScore >= 60 ? 'text-yellow-600' : 'text-red-600'}">
+                                Rata-rata: ${avgScore}%
+                            </span>
+                        </div>
+                        <div class="grid md:grid-cols-3 gap-4">`;
+                
+                results.forEach(result => {
+                    const quizTypeNames = {
+                        'multiple-choice': 'Pilihan Ganda',
+                        'drag-drop': 'Drag & Drop',
+                        'fill-blank': 'Isian Singkat'
+                    };
+                    
+                    html += `
+                        <div class="bg-white rounded-lg p-4 border">
+                            <h4 class="font-semibold text-gray-700 mb-2">${quizTypeNames[result.quiz_type]}</h4>
+                            <p class="text-2xl font-bold ${result.score >= 80 ? 'text-green-600' : result.score >= 60 ? 'text-yellow-600' : 'text-red-600'} mb-1">
+                                ${result.score}%
+                            </p>
+                            <p class="text-sm text-gray-500">
+                                ${new Date(result.completed_at).toLocaleDateString('id-ID')}
+                            </p>
+                        </div>`;
+                });
+                
+                html += '</div></div>';
+            });
+            
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        // Initialize app when page loads
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99804303636e4ac9',t:'MTc2MjA1MTE3MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
